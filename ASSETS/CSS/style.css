@@ -1,0 +1,16 @@
+body {
+    background-color:ivory;
+}
+
+h1,
+section,
+ol {
+    text-align: center;
+}
+
+li {
+    background-color:ivory;
+    margin-left: 20rem;
+    margin-right: 20rem;
+    text-align: left;
+}
