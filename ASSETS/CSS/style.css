@@ -4,8 +4,10 @@ body {
 
 h1,
 section,
-ol {
+.quizQuestions {
     text-align: center;
+    padding: 5px;
+
 }
 
 h2 {
@@ -16,14 +18,19 @@ h2 {
 
 .quizQuestions {
     background-color:ivory;
-    margin-left: 20rem;
-    margin-right: 20rem;
+    margin: 5rem;
     text-align: left;
     display: flex;
     flex-direction: column;
 }
 
+
+
 .time {
     text-align: right;
     margin-right: 20rem;
+}
+
+.startButton {
+    text-align: center;
 }
