@@ -8,9 +8,22 @@ ol {
     text-align: center;
 }
 
-li {
+h2 {
+    color: black;
+    font-size: large;
+    text-align: right;
+}
+
+.quizQuestions {
     background-color:ivory;
     margin-left: 20rem;
     margin-right: 20rem;
     text-align: left;
+    display: flex;
+    flex-direction: column;
+}
+
+.time {
+    text-align: right;
+    margin-right: 20rem;
 }
