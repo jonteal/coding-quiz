@@ -1,4 +1,69 @@
 var startButton = document.querySelector(".start-btn");
+var questionContainerElement = document.getElementById('question-container');
+
+// Start Button Event
+startButton.addEventListener("click", startGame);
+startButton.addEventListener("click", setTime);
+
+
+function startGame() {
+    console.log('Started');
+    startButton.classList.add('hide');
+    questionContainerElement.classList.remove('hide');
+    setNextQuestion();
+}
+
+function setNextQuestion() {
+
+}
+
+function selectAnswer() {
+
+}
+
+
+var questions = [
+    {
+        question: 'Which animal is the symbol for House Stark?',
+        answers: [
+            {text: 'Dragon', correct: false },
+            {text: 'Direworlf', correct: true },
+            {text: 'Lion', correct: false },
+            {text: 'Stag', correct: false}
+        ]
+    }
+]
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 // Timer 
 var timeEl = document.querySelector(".time");
@@ -21,7 +86,5 @@ function setTime() {
     }, 1000);
 }
 
-// Start Button Event
-startButton.addEventListener("click", setTime);
 
 
