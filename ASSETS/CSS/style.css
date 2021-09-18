@@ -1,36 +1,36 @@
+*, *::before, *::after {
+    box-sizing: border-box;
+    font-family:Verdana, Geneva, Tahoma, sans-serif;
+}
+
 body {
     background-color:ivory;
-}
-
-h1,
-section,
-.quizQuestions {
-    text-align: center;
-    padding: 5px;
-
-}
-
-h2 {
-    color: black;
-    font-size: large;
-    text-align: right;
-}
-
-.quizQuestions {
-    background-color:ivory;
-    margin: 5rem;
-    text-align: left;
+    padding: 0;
     display: flex;
-    flex-direction: column;
+    width: 100vw;
+    height: 100vh;
+    justify-content: center;
+    align-items: center;
 }
 
+.container {
+    width: 800px;
+    max-width: 80%;
+    background-color: white;
+    border-radius: 5px;
+    padding: 10px;
+    /* border: solid 5px black; */
+    box-shadow: 0 0 10px 2px;
+}
 
+.btn-grid {
+    display: grid;
+    /* grid-template-columns:  */
+    margin: 20px 0;
+    gap: 10px;
+}
 
 .time {
     text-align: right;
     margin-right: 20rem;
-}
-
-.startButton {
-    text-align: center;
 }

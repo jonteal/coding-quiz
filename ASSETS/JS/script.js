@@ -1,4 +1,4 @@
-var startButton = document.querySelector(".startButton");
+var startButton = document.querySelector(".start-btn");
 
 // Timer 
 var timeEl = document.querySelector(".time");
@@ -14,7 +14,7 @@ function setTime() {
 
         if(secondsLeft === 0) {
             clearInterval(timerInterval);
-            sendMessage();
+            // sendMessage();
         }
     
 

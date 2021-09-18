@@ -7,24 +7,26 @@
     <link rel="stylesheet" href="ASSETS/CSS/style.css">
     <title>Coding Quiz</title>
 </head>
-<body>
-    <h1>Jon's Coding Quiz</h1>
-    
+<body>    
     
     <h2 class="time"></h2>
     <div id="main"></div>
 
-    <br>
-
-    <section>Questions</section>
-    <div class="quizQuestions">
-        <button id="choice-1">Choice 1</button>
-        <button id="choice-2">Choice 2</button>
-        <button id="choice-3">Choice 3</button>
-        <button id="choice-4">Choice 4</button>
+    <div class="container">
+        <div id="question-container" class="hide"></div>
+            <div id="question">Question</div>
+            <div id="answer-buttons" class="btn-grid">
+                <button class="btn">Answer 1</button>
+                <button class="btn">Answer 2</button>
+                <button class="btn">Answer 3</button>
+                <button class="btn">Answer 4</button>
+            </div>
+        <div class="controls">
+            <button id="start-btn" class="start-btn btn">Start</button>
+            <button id="next-btn" class="start-btn btn hide">Next</button>
+        </div>
+    
     </div>
-
-    <button class="startButton">START</button>
     
 
     <script src="ASSETS/JS/script.js"></script>
