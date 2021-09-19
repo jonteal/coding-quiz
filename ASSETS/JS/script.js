@@ -21,7 +21,7 @@ nextButton.addEventListener("click", () => {
     setNextQuestion();
 })
 
-// Function to Hide Start Button, Display and Shuffle Questions
+// Function to Hide Start Button, Display and Shuffle Questions Randomly
 function startGame() {
     startButton.classList.add('hide');
     shuffledQuestions = questions.sort(() => Math.random() - .5);
@@ -37,7 +37,7 @@ function setNextQuestion() {
     // questionContainerElement.classList.remove('hide');
 }
 
-// Debug
+// 
 function showQuestion(question) {
     questionElement.innerText = question.question;
     question.answers.forEach(answer => {
@@ -89,9 +89,7 @@ function clearStatusClass(element) {
     element.classList.remove('wrong');
 }
 
-
-
-
+// Quiz Questions Array
 const questions = [
     {
         question: 'Which animal is the symbol for House Stark?',
