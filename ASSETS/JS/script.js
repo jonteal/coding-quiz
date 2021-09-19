@@ -1,9 +1,9 @@
 // Assigned Variables 
 var startButton = document.getElementById('start-btn');
 var nextButton = document.getElementById('next-btn');
-var questionContainerElement = document.getElementById('question-container');
-var questionElement = document.getElementById('question');
-var answerButtonsElement = document.getElementById('answer-buttons');
+var questionContainerElem = document.getElementById('question-container');
+var questionElem = document.getElementById('question');
+var answerButtonsElem = document.getElementById('answer-buttons');
 
 // Variables That Can be Changed
 let shuffledQuestions, currentQuestionIndex;
@@ -26,7 +26,7 @@ function startGame() {
     startButton.classList.add('hide');
     shuffledQuestions = questions.sort(() => Math.random() - .5);
     currentQuestionIndex = 0;
-    questionContainerElement.classList.remove('hide');
+    questionContainerElem.classList.remove('hide');
     setNextQuestion();
 }
 
@@ -34,12 +34,12 @@ function startGame() {
 function setNextQuestion() {
     resetState();
     showQuestion(shuffledQuestions[currentQuestionIndex]);
-    // questionContainerElement.classList.remove('hide');
 }
 
-// 
+// Function to Display Question and Answer Buttons
 function showQuestion(question) {
-    questionElement.innerText = question.question;
+    // Accesses the 
+    questionElem.innerText = question.question;
     question.answers.forEach(answer => {
         var button = document.createElement('button');
         button.innerText = answer.text;
@@ -48,42 +48,55 @@ function showQuestion(question) {
             button.dataset.correct = answer.correct;
         }
         button.addEventListener("click", selectAnswer);
-        answerButtonsElement.appendChild(button);
+        answerButtonsElem.appendChild(button);
     })
 }
 
+// Function to Reset State During Every Question
 function resetState() {
     clearStatusClass(document.body);
+    
+    // Hides Next Button
     nextButton.classList.add('hide');
-    while (answerButtonsElement.firstChild) {
-        answerButtonsElement.removeChild(answerButtonsElement.firstChild);
+    while (answerButtonsElem.firstChild) {
+        answerButtonsElem.removeChild(answerButtonsElem.firstChild);
     }
 }
 
+// Function to Validate Selected Answers from User
 function selectAnswer(e) {
     var selectedButton = e.target;
+
+    // Setting Variable for Correct Answer in Dataset
     var correct = selectedButton.dataset.correct;
     setStatusClass(document.body, correct);
-    Array.from(answerButtonsElement.children).forEach(button => {
+    Array.from(answerButtonsElem.children).forEach(button => {
         setStatusClass(button, button.dataset.correct);
     })
+    
+    // Shows Next Button if There is At Least 1 Question Remaining
     if (shuffledQuestions.length > currentQuestionIndex + 1) {
         nextButton.classList.remove('hide');
-    } else {
+    } 
+    // Else Shows the Restart Button
+    else {
         startButton.innerText = 'Restart';
         startButton.classList.remove('hide');
     }
 }
 
+// Establishes Correct/Wrong Answers Based on User's Pick
 function setStatusClass(element, correct) {
     clearStatusClass(element);
     if (correct) {
         element.classList.add('correct');
     } else {
         element.classList.add('wrong');
+        secondsLeft - 10;
     }
 }
 
+// Resets the Status of Correct/Wrong Answer After Each User Pick
 function clearStatusClass(element) {
     element.classList.remove('correct');
     element.classList.remove('wrong');
@@ -95,7 +108,7 @@ const questions = [
         question: 'Which animal is the symbol for House Stark?',
         answers: [
             {text: 'Dragon', correct: false },
-            {text: 'Direworlf', correct: true },
+            {text: 'Direwolf', correct: true },
             {text: 'Lion', correct: false },
             {text: 'Stag', correct: false}
         ]
@@ -129,60 +142,40 @@ const questions = [
     }
 ]
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-// Timer 
+// Timer Variables
 var timeEl = document.querySelector(".time");
-
 var mainEl = document.getElementById("main");
 
+// Total Seconds for Quiz
 var secondsLeft = 60;
 
+// Timer Function
 function setTime() {
     var timerInterval = setInterval(function() {
         secondsLeft--;
+
+        // Inserts "Seconds Remaining" After Counter
         timeEl.textContent = secondsLeft + " seconds remaining.";
 
+        // Stops the Countdown Once 0 is Reached
         if(secondsLeft === 0) {
             clearInterval(timerInterval);
-            // sendMessage();
-        }
-    
-
+        }   
     }, 1000);
 }
 
+// Subtracts 10 Seconds if Player Gets a Wrong Answer
+var minus10 = document.getElementById("")
+function subtractTime() {
+    if (selectedButton !== correct) {
+        secondsLeft - 10;
+    }
+}
 
 
+// I would like it...
+// Have the restart button also restart the clock, i.e. the entire game
+// Have the timer subtract 10 seconds every time there is a wrong answer
+// Display a message to the User at the end of the game
+// Stop the clock and display it as the Player's score at the end of the game
+// Have an input for the player's initials and save their score 
