@@ -1,8 +1,8 @@
-var startButton = document.querySelector(".start-btn");
-var nextButton = document.querySelector(".next-btn");
-var questionContainerElement = document.querySelector(".question-container");
-var questionElement = document.querySelector(".question");
-var answerButtonsElement = document.querySelector(".answer-buttons");
+var startButton = document.getElementById('start-btn');
+var nextButton = document.getElementById('next-btn');
+var questionContainerElement = document.getElementById('question-container');
+var questionElement = document.getElementById('question');
+var answerButtonsElement = document.getElementById('answer-buttons');
 
 let shuffledQuestions, currentQuestionIndex;
 
@@ -13,9 +13,10 @@ startButton.addEventListener("click", setTime);
 nextButton.addEventListener("click", () => {
     currentQuestionIndex++;
     setNextQuestion();
+    console.log("Working?");
 })
 
-
+// 
 function startGame() {
     startButton.classList.add('hide');
     shuffledQuestions = questions.sort(() => Math.random() - .5);
@@ -66,6 +67,20 @@ function selectAnswer(e) {
     }
 }
 
+function setStatusClass(element, correct) {
+    clearStatusClass(element);
+    if (correct) {
+        element.classList.add('correct');
+    } else {
+        element.classList.add('wrong');
+    }
+}
+
+function clearStatusClass(element) {
+    element.classList.remove('correct');
+    element.classList.remove('wrong');
+}
+
 
 
 
@@ -78,8 +93,42 @@ const questions = [
             {text: 'Lion', correct: false },
             {text: 'Stag', correct: false}
         ]
+    },
+    {
+        question: 'How many dragons did Daenerys have?',
+        answer: [
+            {text: '1', correct: false },
+            {text: '2', correct: false },
+            {text: '3', correct: true },
+            {text: '10', correct: false },
+        ]
+    },
+    {
+        question: 'What was the name of the evil army that posed the biggest threat in the show?',
+        answer: [
+            {text: 'The Weeping Willows', correct: false },
+            {text: 'The Great Horde', correct: false },
+            {text: 'The Golden Army', correct: false },
+            {text: 'The White Walkers', correct: true },
+        ]
     }
+    {
+        question: 'What was arguably the most popular phrase coined from this series?',
+        answer: [
+            {text: 'We all float down here.', correct: false },
+            {text: 'Winter is coming.', correct: true },
+            {text: 'You shall not pass!', correct: false },
+            {text: 'May the force be with you.', correct: false },
+        ]
+    }
+
+
+
+
 ]
+
+
+
 
 
 
