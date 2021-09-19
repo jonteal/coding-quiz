@@ -5,15 +5,22 @@ var questionContainerElem = document.getElementById('question-container');
 var questionElem = document.getElementById('question');
 var answerButtonsElem = document.getElementById('answer-buttons');
 
-
+// Score-Related Variables
+var lastScore = document.getElementById('last-score');
+var highScore = document.getElementById('high-score');
 var isWin = false;
-var timer;
-var timerCount;
 var lastScoreCounter = 0;
 var highScoreCounter = 0;
 
+// Timer-related Variables
+var timer;
+var timerCount;
 var timerElement = document.querySelector('.timer-count');
 
+// Calls init() so that it fires when page is opened
+init();
+
+// The init function is called when the page loads
 function init() {
     getLastScore();
     getHighScore();
@@ -33,8 +40,9 @@ nextButton.addEventListener("click", () => {
 
 // Function to Hide Start Button, Display and Shuffle Questions Randomly
 function startGame() {
+    isWin = false;
+    timerCount = 60;
     startButton.classList.add('hide');
-    startButton.disabled = true;
     shuffledQuestions = questions.sort(() => Math.random() - .5);
     currentQuestionIndex = 0;
     questionContainerElem.classList.remove('hide');
@@ -104,7 +112,6 @@ function setStatusClass(element, correct) {
         element.classList.add('correct');
     } else {
         element.classList.add('wrong');
-        secondsLeft - 10;
     }
 }
 
@@ -177,31 +184,6 @@ function startTimer() {
     }, 1000);
 }
 
-
-
-
-// // Timer Variables
-// var timeEl = document.querySelector(".time");
-// var mainEl = document.getElementById("main");
-
-// // Total Seconds for Quiz
-// var secondsLeft = 60;
-
-// // Timer Function
-// function setTime() {
-//     var timerInterval = setInterval(function() {
-//         secondsLeft--;
-
-//         // Inserts "Seconds Remaining" After Counter
-//         timeEl.textContent = secondsLeft + " seconds remaining.";
-
-//         // Stops the Countdown Once 0 is Reached
-//         if(secondsLeft === 0) {
-//             clearInterval(timerInterval);
-//         }   
-//     }, 1000);
-// }
-
 // Subtracts 10 Seconds if Player Gets a Wrong Answer
 var minus10 = document.getElementById("")
 function subtractTime() {
@@ -210,39 +192,52 @@ function subtractTime() {
     }
 }
 
+function setLastScore() {
+    lastScore.textContent = lastScoreCounter;
+    localStorage.setItem("lastScoreCount", lastScoreCounter);
+}
 
-// The init function is called when the page loads  
-// function init() {
-//     getWins();
-//     getlosses();
-// }
+function setHighScore() {
+    highScore.textContent = highScoreCounter;
+    localStorage.setItem("highScoreCount", highScoreCounter);
+}
 
-// // These functions are used by init
-// function getWins() {
-//     // Get stored value from client storage, if it exists
-//     var storedWins = localStorage.getItem("winCount");
-//     // If stored value doesn't exist, set counter to 0
-//     if (storedWins === null) {
-//         winCounter = 0;
-//     } else {
-//       // If a value is retrieved from client storage set the winCounter to that value
-//         winCounter = storedWins;
-//     }
-//     //Render win count to page
-//     win.textContent = winCounter;
-// }
+function getLastScore() {
+    var storedLastScore = localStorage.getItem("lastScoreCount");
+    if (storedLastScore === null) {
+        lastScoreCounter = 0;
+    } else {
+        lastScoreCounter = storedLastScore;
+    }
 
-// function getlosses() {
-//     var storedLosses = localStorage.getItem("loseCount");
-//     if (storedLosses === null) {
-//         loseCounter = 0;
-//     } else {
-//         loseCounter = storedLosses;
-//     }
-//     l   ose.textContent = loseCounter;
-// }
+    lastScore.textContent = lastScoreCounter;
+}
 
-init();
+function getHighScore() {
+    var storedHighScore = localStorage.getItem("highScoreCount");
+    if (storedHighScore === null) {
+        highScoreCounter = 0;
+    } else {
+        highScoreCounter = storedHighScore;
+    }
+
+    highScore.textContent = highScoreCounter;
+}
+
+
+var resetButton = document.querySelector(".reset-button");
+
+function resetGame() {
+    // Resets the last score and high score
+    lastScoreCounter = 0;
+    highScoreCounter = 0;
+    // Renders last score and high score counts and sets them into client storage
+    setLastScore()
+    setHighScore()
+}
+
+// Attaches event listener to button
+resetButton.addEventListener("click", resetGame);
 
 
 // I would like it...
