@@ -158,6 +158,15 @@ const questions = [
             {text: 'You shall not pass!', correct: false },
             {text: 'May the force be with you.', correct: false },
         ]
+    },
+    {
+        question: 'Who famously said "I drink and I know things?',
+        answers: [
+            {text: 'Tyrion Lannister', correct: true },
+            {text: 'Theon Greyjoy', correct: false },
+            {text: 'Robert Baratheon', correct: false },
+            {text: 'Jaime Lannister', correct: false },
+        ]
     }
 ]
 
