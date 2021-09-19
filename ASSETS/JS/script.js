@@ -23,6 +23,7 @@ nextButton.addEventListener("click", () => {
 // Function to Hide Start Button, Display and Shuffle Questions Randomly
 function startGame() {
     startButton.classList.add('hide');
+    startButton.disabled = true;
     shuffledQuestions = questions.sort(() => Math.random() - .5);
     currentQuestionIndex = 0;
     questionContainerElem.classList.remove('hide');

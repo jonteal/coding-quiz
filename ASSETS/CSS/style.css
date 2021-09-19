@@ -11,13 +11,15 @@
 
 body {
     --hue: var(--hue-neutral);
-    background-color: hsl(var(--hue), 100%, 20%);
+    background-color: hsl(var(--hue), 130%, 40%);
     padding: 0;
     margin: 0;
     display: flex;
     width: 100vw;
     height: 100vh;
-    justify-content: center;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
     align-items: center;
 }
 
@@ -86,4 +88,42 @@ body.wrong {
 
 .hide {
     display: none;
+}
+
+.large-font {
+    font-size: 3.5em;
+    text-align:center; 
+    font-family: fantasy;
+}
+
+.medium-font {
+    font-size: 2em;
+    text-align: center;
+    font-family: fantasy;
+}
+
+.reset-button {
+    font-size: 16px;
+    height: 25px;
+    line-height: 8px;
+    margin-top: 15px;
+    text-align: center;
+    display: flex;
+    align-items: center;
+}
+
+.reset-button-div {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding-bottom: 1em;
+}
+
+.reset-button {
+    cursor: pointer;
+    max-width: 250px;
+    padding: 20px 25px;
+    border-radius: 8px;
+    text-align: center;
+    font-weight: bold;
 }
