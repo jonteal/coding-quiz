@@ -1,37 +1,75 @@
 var startButton = document.querySelector(".start-btn");
-var questionContainerElement = document.getElementById('question-container');
+var nextButton = document.querySelector(".next-btn");
+var questionContainerElement = document.querySelector(".question-container");
+var questionElement = document.querySelector(".question");
+var answerButtonsElement = document.querySelector(".answer-buttons");
 
-var shuffledQuestions, currentQuestionIndex
+let shuffledQuestions, currentQuestionIndex;
 
 
 // Start Button Event
 startButton.addEventListener("click", startGame);
 startButton.addEventListener("click", setTime);
+nextButton.addEventListener("click", () => {
+    currentQuestionIndex++;
+    setNextQuestion();
+})
 
 
 function startGame() {
-    console.log('Started');
     startButton.classList.add('hide');
-    shuffledQuestions = question.sort(() => Math.random() - .5);
+    shuffledQuestions = questions.sort(() => Math.random() - .5);
     currentQuestionIndex = 0;
     questionContainerElement.classList.remove('hide');
     setNextQuestion();
 }
 
 function setNextQuestion() {
-
+    resetState();
+    showQuestion(shuffledQuestions[currentQuestionIndex]);
 }
 
 function showQuestion(question) {
-    
+    questionElement.innerText = question.question;
+    question.answers.forEach(answer => {
+        var button = document.createElement('button');
+        button.innerText = answer.text;
+        button.classList.add('btn');
+        if (answer.correct) {
+            button.dataset.correct = answer.correct;
+        }
+        button.addEventListener("click", selectAnswer);
+        answerButtonsElement.appendChild(button);
+    })
 }
 
-function selectAnswer() {
+function resetState() {
+    clearStatusClass(document.body);
+    nextButton.classList.add('hide');
+    while (answerButtonsElement.firstChild) {
+        answerButtonsElement.removeChild(answerButtonsElement.firstChild);
+    }
+}
 
+function selectAnswer(e) {
+    var selectedButton = e.target;
+    var correct = selectedButton.dataset.correct;
+    setStatusClass(document.body, correct);
+    Array.from(answerButtonsElement.children).forEach(button => {
+        setStatusClass(button, button.dataset.correct);
+    })
+    if (shuffledQuestions.length > currentQuestionIndex + 1) {
+        nextButton.classList.remove('hide');
+    } else {
+        startButton.innerText = 'Restart';
+        startButton.classList.remove('hide');
+    }
 }
 
 
-var questions = [
+
+
+const questions = [
     {
         question: 'Which animal is the symbol for House Stark?',
         answers: [
