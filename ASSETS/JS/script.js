@@ -1,9 +1,11 @@
+// Assigned Variables 
 var startButton = document.getElementById('start-btn');
 var nextButton = document.getElementById('next-btn');
 var questionContainerElement = document.getElementById('question-container');
 var questionElement = document.getElementById('question');
 var answerButtonsElement = document.getElementById('answer-buttons');
 
+// Variables That Can be Changed
 let shuffledQuestions, currentQuestionIndex;
 
 
@@ -19,7 +21,7 @@ nextButton.addEventListener("click", () => {
     setNextQuestion();
 })
 
-// St
+// Function to Hide Start Button, Display and Shuffle Questions
 function startGame() {
     startButton.classList.add('hide');
     shuffledQuestions = questions.sort(() => Math.random() - .5);
@@ -28,11 +30,14 @@ function startGame() {
     setNextQuestion();
 }
 
+// Function to Set the Next Question
 function setNextQuestion() {
     resetState();
     showQuestion(shuffledQuestions[currentQuestionIndex]);
+    // questionContainerElement.classList.remove('hide');
 }
 
+// Debug
 function showQuestion(question) {
     questionElement.innerText = question.question;
     question.answers.forEach(answer => {
@@ -99,7 +104,7 @@ const questions = [
     },
     {
         question: 'How many dragons did Daenerys have?',
-        answer: [
+        answers: [
             {text: '1', correct: false },
             {text: '2', correct: false },
             {text: '3', correct: true },
@@ -108,7 +113,7 @@ const questions = [
     },
     {
         question: 'What was the name of the evil army that posed the biggest threat in the show?',
-        answer: [
+        answers: [
             {text: 'The Weeping Willows', correct: false },
             {text: 'The Great Horde', correct: false },
             {text: 'The Golden Army', correct: false },
@@ -117,7 +122,7 @@ const questions = [
     },
     {
         question: 'What was arguably the most popular phrase coined from this series?',
-        answer: [
+        answers: [
             {text: 'We all float down here.', correct: false },
             {text: 'Winter is coming.', correct: true },
             {text: 'You shall not pass!', correct: false },
