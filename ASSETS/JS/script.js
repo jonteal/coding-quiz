@@ -5,14 +5,25 @@ var questionContainerElem = document.getElementById('question-container');
 var questionElem = document.getElementById('question');
 var answerButtonsElem = document.getElementById('answer-buttons');
 
+
+var isWin = false;
+var timer;
+var timerCount;
+var lastScoreCounter = 0;
+var highScoreCounter = 0;
+
+var timerElement = document.querySelector('.timer-count');
+
+function init() {
+    getLastScore();
+    getHighScore();
+}
+
 // Variables That Can be Changed
 let shuffledQuestions, currentQuestionIndex;
 
 // Start Button Event to Begin Game
 startButton.addEventListener("click", startGame);
-
-// Start Button Event to Begin Timer
-startButton.addEventListener("click", setTime);
 
 // Next Button Event to Go to Next Question
 nextButton.addEventListener("click", () => {
@@ -28,6 +39,7 @@ function startGame() {
     currentQuestionIndex = 0;
     questionContainerElem.classList.remove('hide');
     setNextQuestion();
+    startTimer()
 }
 
 // Function to Set the Next Question
@@ -142,27 +154,53 @@ const questions = [
     }
 ]
 
-// Timer Variables
-var timeEl = document.querySelector(".time");
-var mainEl = document.getElementById("main");
-
-// Total Seconds for Quiz
-var secondsLeft = 60;
-
-// Timer Function
-function setTime() {
-    var timerInterval = setInterval(function() {
-        secondsLeft--;
-
-        // Inserts "Seconds Remaining" After Counter
-        timeEl.textContent = secondsLeft + " seconds remaining.";
-
-        // Stops the Countdown Once 0 is Reached
-        if(secondsLeft === 0) {
-            clearInterval(timerInterval);
-        }   
+// The setTimer function starts and stops the timer and triggers winGame() and loseGame()
+function startTimer() {
+    // Sets Timer
+    timer = setInterval(function() {
+        timerCount--;
+        timerElement.textContent = timerCount;
+        if (timerCount >= 0) {
+            // Tests if win condition is met
+            if (isWin && timerCount > 0) {
+                // Clears interval and stops timer
+                clearInterval(timer);
+                winGame();
+            }
+        }
+        // Tests if time has run out
+        if (timerCount === 0) {
+            // Clears interval
+            clearInterval(timer);
+            loseGame();
+        }
     }, 1000);
 }
+
+
+
+
+// // Timer Variables
+// var timeEl = document.querySelector(".time");
+// var mainEl = document.getElementById("main");
+
+// // Total Seconds for Quiz
+// var secondsLeft = 60;
+
+// // Timer Function
+// function setTime() {
+//     var timerInterval = setInterval(function() {
+//         secondsLeft--;
+
+//         // Inserts "Seconds Remaining" After Counter
+//         timeEl.textContent = secondsLeft + " seconds remaining.";
+
+//         // Stops the Countdown Once 0 is Reached
+//         if(secondsLeft === 0) {
+//             clearInterval(timerInterval);
+//         }   
+//     }, 1000);
+// }
 
 // Subtracts 10 Seconds if Player Gets a Wrong Answer
 var minus10 = document.getElementById("")

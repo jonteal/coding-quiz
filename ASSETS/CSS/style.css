@@ -127,3 +127,8 @@ body.wrong {
     text-align: center;
     font-weight: bold;
 }
+
+.last-score,
+.high-score {
+    font-family: fantasy;
+}
