@@ -17,7 +17,7 @@ var timer;
 var timerCount;
 var timerElement = document.querySelector('.timer-count');
 
-// Calls init() so that it fires when page is opened
+// Calls init() so that it executes when page is opened
 init();
 
 // The init function is called when the page loads
@@ -193,24 +193,47 @@ function startTimer() {
     }, 1000);
 }
 
-// Subtracts 10 Seconds if Player Gets a Wrong Answer
-var minus10 = document.getElementById("")
+// The winGame Function is called when the win condition is met
+function winGame() {
+    wordBlank.textContent = "Great job!";
+    startButton.disabled = false;
+    startButton.classList.remove('hide');
+    setLastScore();
+    // Need function to add remaining time as score
+    // Need function to enter in initials of player
+}
+
+// The loseGame function is called when the timer reached 0
+function loseGame() {
+    wordBlank.textContent = "TIME'S UP!";
+    startButton.disabled = false;
+    setLastScore();
+    // Need function to add remaining time as score
+}
+
+
+// Subtracts 10 Seconds if Player Gets a Wrong Answer (NOT WORKING)
+var minus10 = document.getElementById('timer-count');
+
 function subtractTime() {
     if (selectedButton !== correct) {
-        secondsLeft - 10;
+        minus10 - 10;
     }
 }
 
+// Sets the Last Score Achieved by Player
 function setLastScore() {
     lastScore.textContent = lastScoreCounter;
     localStorage.setItem("lastScoreCount", lastScoreCounter);
 }
 
+// Sets the Highest Score Achieved by Player
 function setHighScore() {
     highScore.textContent = highScoreCounter;
     localStorage.setItem("highScoreCount", highScoreCounter);
 }
 
+// Gets Last Score Player Achieved to Display
 function getLastScore() {
     var storedLastScore = localStorage.getItem("lastScoreCount");
     if (storedLastScore === null) {
@@ -218,10 +241,10 @@ function getLastScore() {
     } else {
         lastScoreCounter = storedLastScore;
     }
-
     lastScore.textContent = lastScoreCounter;
 }
 
+// Gets Highest Score Player Achieved to Display
 function getHighScore() {
     var storedHighScore = localStorage.getItem("highScoreCount");
     if (storedHighScore === null) {
@@ -229,11 +252,11 @@ function getHighScore() {
     } else {
         highScoreCounter = storedHighScore;
     }
-
     highScore.textContent = highScoreCounter;
 }
 
 
+// Button to Reset Scores
 var resetButton = document.querySelector(".reset-button");
 
 function resetGame() {
