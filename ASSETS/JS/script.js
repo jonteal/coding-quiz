@@ -8,7 +8,6 @@ var answerButtonsElem = document.getElementById('answer-buttons');
 // Variables That Can be Changed
 let shuffledQuestions, currentQuestionIndex;
 
-
 // Start Button Event to Begin Game
 startButton.addEventListener("click", startGame);
 
@@ -173,9 +172,45 @@ function subtractTime() {
 }
 
 
+// The init function is called when the page loads  
+// function init() {
+//     getWins();
+//     getlosses();
+// }
+
+// // These functions are used by init
+// function getWins() {
+//     // Get stored value from client storage, if it exists
+//     var storedWins = localStorage.getItem("winCount");
+//     // If stored value doesn't exist, set counter to 0
+//     if (storedWins === null) {
+//         winCounter = 0;
+//     } else {
+//       // If a value is retrieved from client storage set the winCounter to that value
+//         winCounter = storedWins;
+//     }
+//     //Render win count to page
+//     win.textContent = winCounter;
+// }
+
+// function getlosses() {
+//     var storedLosses = localStorage.getItem("loseCount");
+//     if (storedLosses === null) {
+//         loseCounter = 0;
+//     } else {
+//         loseCounter = storedLosses;
+//     }
+//     l   ose.textContent = loseCounter;
+// }
+
+init();
+
+
 // I would like it...
 // Have the restart button also restart the clock, i.e. the entire game
 // Have the timer subtract 10 seconds every time there is a wrong answer
 // Display a message to the User at the end of the game
 // Stop the clock and display it as the Player's score at the end of the game
 // Have an input for the player's initials and save their score 
+// I want to create a losing message/scenario for if the Player doesn't finish in time
+// I want a reset score function/button
