@@ -7,16 +7,19 @@ var answerButtonsElement = document.getElementById('answer-buttons');
 let shuffledQuestions, currentQuestionIndex;
 
 
-// Start Button Event
+// Start Button Event to Begin Game
 startButton.addEventListener("click", startGame);
+
+// Start Button Event to Begin Timer
 startButton.addEventListener("click", setTime);
+
+// Next Button Event to Go to Next Question
 nextButton.addEventListener("click", () => {
     currentQuestionIndex++;
     setNextQuestion();
-    console.log("Working?");
 })
 
-// 
+// St
 function startGame() {
     startButton.classList.add('hide');
     shuffledQuestions = questions.sort(() => Math.random() - .5);
@@ -111,7 +114,7 @@ const questions = [
             {text: 'The Golden Army', correct: false },
             {text: 'The White Walkers', correct: true },
         ]
-    }
+    },
     {
         question: 'What was arguably the most popular phrase coined from this series?',
         answer: [
@@ -121,10 +124,6 @@ const questions = [
             {text: 'May the force be with you.', correct: false },
         ]
     }
-
-
-
-
 ]
 
 
