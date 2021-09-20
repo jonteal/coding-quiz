@@ -217,7 +217,7 @@ var minus10 = document.getElementById('timer-count');
 
 function subtractTime() {
     if (selectedButton !== correct) {
-        minus10 - 10;
+        minus10 - 10000;
     }
 }
 
@@ -255,7 +255,6 @@ function getHighScore() {
     }
     highScore.textContent = highScoreCounter;
 }
-
 
 // Button to Reset Scores
 var resetButton = document.querySelector(".reset-button");
