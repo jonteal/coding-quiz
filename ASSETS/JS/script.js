@@ -26,7 +26,7 @@ function init() {
     getHighScore();
 }
 
-// Variables That Can be Changed
+// Variables That Can be Changed to Shuffled
 let shuffledQuestions, currentQuestionIndex;
 
 // Start Button Event to Begin Game
@@ -220,6 +220,7 @@ function subtractTime() {
         minus10 - 10;
     }
 }
+
 
 // Sets the Last Score Achieved by Player
 function setLastScore() {
