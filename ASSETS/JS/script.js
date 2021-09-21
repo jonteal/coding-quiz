@@ -1,6 +1,6 @@
 // Assigned Variables 
-var startButton = document.getElementById('start-btn');
-var nextButton = document.getElementById('next-btn');
+var startBtn = document.getElementById('start-btn');
+var nextBtn = document.getElementById('next-btn');
 var questionContainerElem = document.getElementById('question-container');
 var questionElem = document.getElementById('question');
 var answerButtonsElem = document.getElementById('answer-buttons');
@@ -8,7 +8,7 @@ var answerButtonsElem = document.getElementById('answer-buttons');
 // Score-Related Variables
 var lastScore = document.getElementById('last-score');
 var highScore = document.getElementById('high-score');
-var isWin = false;
+var gameOver = false;
 var lastScoreCounter = 0;
 var highScoreCounter = 0;
 
@@ -30,19 +30,19 @@ function init() {
 let shuffledQuestions, currentQuestionIndex;
 
 // Start Button Event to Begin Game
-startButton.addEventListener("click", startGame);
+startBtn.addEventListener("click", startGame);
 
 // Next Button Event to Go to Next Question
-nextButton.addEventListener("click", () => {
+nextBtn.addEventListener("click", () => {
     currentQuestionIndex++;
     setNextQuestion();
 })
 
 // Function to Hide Start Button, Display and Shuffle Questions Randomly
 function startGame() {
-    isWin = false;
+    gameOver = false;
     timerCount = 60;
-    startButton.classList.add('hide');
+    startBtn.classList.add('hide');
     shuffledQuestions = questions.sort(() => Math.random() - .5);
     currentQuestionIndex = 0;
     questionContainerElem.classList.remove('hide');
@@ -77,7 +77,7 @@ function resetState() {
     clearStatusClass(document.body);
     
     // Hides Next Button
-    nextButton.classList.add('hide');
+    nextBtn.classList.add('hide');
     while (answerButtonsElem.firstChild) {
         answerButtonsElem.removeChild(answerButtonsElem.firstChild);
     }
@@ -89,6 +89,7 @@ function selectAnswer(e) {
 
     // Setting Variable for Correct Answer in Dataset
     var correct = selectedButton.dataset.correct;
+    console.log(correct);
     setStatusClass(document.body, correct);
     Array.from(answerButtonsElem.children).forEach(button => {
         setStatusClass(button, button.dataset.correct);
@@ -96,12 +97,12 @@ function selectAnswer(e) {
     
     // Shows Next Button if There is At Least 1 Question Remaining
     if (shuffledQuestions.length > currentQuestionIndex + 1) {
-        nextButton.classList.remove('hide');
+        nextBtn.classList.remove('hide');
     } 
     // Else Shows the Restart Button
     else {
-        startButton.innerText = 'Restart';
-        startButton.classList.remove('hide');
+        startBtn.innerText = 'Restart';
+        startBtn.classList.remove('hide');
     }
 }
 
@@ -170,7 +171,7 @@ const questions = [
     }
 ]
 
-// The setTimer function starts and stops the timer and triggers winGame() and loseGame()
+// The setTimer function starts and stops the timer and triggers winGame() and timeOut()
 function startTimer() {
     // Sets Timer
     timer = setInterval(function() {
@@ -178,7 +179,7 @@ function startTimer() {
         timerElement.textContent = timerCount;
         if (timerCount >= 0) {
             // Tests if win condition is met
-            if (isWin && timerCount > 0) {
+            if (gameOver && timerCount > 0) {
                 // Clears interval and stops timer
                 clearInterval(timer);
                 winGame();
@@ -188,38 +189,35 @@ function startTimer() {
         if (timerCount === 0) {
             // Clears interval
             clearInterval(timer);
-            loseGame();
+            timeOut();
         }
     }, 1000);
 }
 
 // The winGame Function is called when the win condition is met
 function winGame() {
-    wordBlank.textContent = "Great job!";
-    startButton.disabled = false;
-    startButton.classList.remove('hide');
+    startBtn.disabled = false;
+    startBtn.classList.remove('hide');
     setLastScore();
     // Need function to add remaining time as score
     // Need function to enter in initials of player
 }
 
-// The loseGame function is called when the timer reached 0
-function loseGame() {
-    wordBlank.textContent = "TIME'S UP!";
-    startButton.disabled = false;
+// The timeOut function is called when the timer reached 0
+function timeOut() {
+    startBtn.disabled = false;
     setLastScore();
     // Need function to add remaining time as score
 }
 
 
 // Subtracts 10 Seconds if Player Gets a Wrong Answer (NOT WORKING)
-var minus10 = document.getElementById('timer-count');
 
 function subtractTime() {
-    if (selectedButton !== correct) {
-        minus10 - 10000;
+    // if (selectedButton !== correct) {
+        timerCount - 10;
     }
-}
+
 
 
 // Sets the Last Score Achieved by Player
@@ -257,9 +255,9 @@ function getHighScore() {
 }
 
 // Button to Reset Scores
-var resetButton = document.querySelector(".reset-button");
+var resetScoreButton = document.querySelector(".reset-score-button");
 
-function resetGame() {
+function resetScores() {
     // Resets the last score and high score
     lastScoreCounter = 0;
     highScoreCounter = 0;
@@ -268,12 +266,12 @@ function resetGame() {
     setHighScore()
 }
 
-// Attaches event listener to button
-resetButton.addEventListener("click", resetGame);
+// Attaches Click Event Listener to Reset Scores
+resetScoreButton.addEventListener("click", resetScores);
 
 
 // I would like it...
-// Have the restart button also restart the clock, i.e. the entire game
+// Get rid of restart button and just replace with Start button. When the last question ends the clock stops.
 // Have the timer subtract 10 seconds every time there is a wrong answer
 // Display a message to the User at the end of the game
 // Stop the clock and display it as the Player's score at the end of the game

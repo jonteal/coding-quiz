@@ -112,14 +112,14 @@ body.wrong {
     align-items: center;
 }
 
-.reset-button-div {
+.reset-score-button-div {
     display: flex;
     justify-content: center;
     align-items: center;
     padding-bottom: 1em;
 }
 
-.reset-button {
+.reset-score-button {
     max-width: 250px;
     padding: 20px 25px;
     border-radius: 8px;
