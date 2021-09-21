@@ -50,6 +50,7 @@ function startGame() {
     startTimer()
 }
 
+
 // Function to Set the Next Question
 function setNextQuestion() {
     resetState();
@@ -89,11 +90,17 @@ function selectAnswer(e) {
 
     // Setting Variable for Correct Answer in Dataset
     var correct = selectedButton.dataset.correct;
-    console.log(correct);
+    // console.log(correct);
     setStatusClass(document.body, correct);
     Array.from(answerButtonsElem.children).forEach(button => {
         setStatusClass(button, button.dataset.correct);
     })
+
+    // Tests if the answer is incorret and subtracts 10 seconds if so
+    if (!correct) {
+        timerCount -= 10; 
+        // console.log("test");
+    }
     
     // Shows Next Button if There is At Least 1 Question Remaining
     if (shuffledQuestions.length > currentQuestionIndex + 1) {
@@ -103,6 +110,7 @@ function selectAnswer(e) {
     else {
         startBtn.innerText = 'Restart';
         startBtn.classList.remove('hide');
+        gameOver = true;
     }
 }
 
@@ -183,6 +191,7 @@ function startTimer() {
                 // Clears interval and stops timer
                 clearInterval(timer);
                 winGame();
+                // console.log("test for game over")
             }
         }
         // Tests if time has run out
@@ -190,6 +199,7 @@ function startTimer() {
             // Clears interval
             clearInterval(timer);
             timeOut();
+            console.log("test")
         }
     }, 1000);
 }
@@ -199,9 +209,13 @@ function winGame() {
     startBtn.disabled = false;
     startBtn.classList.remove('hide');
     setLastScore();
+    finishTime = timerCount;
     // Need function to add remaining time as score
     // Need function to enter in initials of player
+
 }
+
+var finishTime;
 
 // The timeOut function is called when the timer reached 0
 function timeOut() {
@@ -210,26 +224,23 @@ function timeOut() {
     // Need function to add remaining time as score
 }
 
-
-// Subtracts 10 Seconds if Player Gets a Wrong Answer (NOT WORKING)
-
-function subtractTime() {
-    // if (selectedButton !== correct) {
-        timerCount - 10;
-    }
+var lastScoreArray = [];
+var highScoreArray = [];
 
 
-
-// Sets the Last Score Achieved by Player
+    // Sets the Last Score Achieved by Player
 function setLastScore() {
     lastScore.textContent = lastScoreCounter;
-    localStorage.setItem("lastScoreCount", lastScoreCounter);
+    lastScoreArray.push(lastScoreCounter);
+    localStorage.setItem("lastScoreCount", lastScoreArray);
 }
+
 
 // Sets the Highest Score Achieved by Player
 function setHighScore() {
     highScore.textContent = highScoreCounter;
-    localStorage.setItem("highScoreCount", highScoreCounter);
+    highScoreArray.push(highScoreCounter)
+    localStorage.setItem("highScoreCount", highScoreArray);
 }
 
 // Gets Last Score Player Achieved to Display
@@ -272,9 +283,14 @@ resetScoreButton.addEventListener("click", resetScores);
 
 // I would like it...
 // Get rid of restart button and just replace with Start button. When the last question ends the clock stops.
-// Have the timer subtract 10 seconds every time there is a wrong answer
 // Display a message to the User at the end of the game
 // Stop the clock and display it as the Player's score at the end of the game
 // Have an input for the player's initials and save their score 
 // I want to create a losing message/scenario for if the Player doesn't finish in time
 // I want a reset score function/button
+
+// Look into how to manipulate DOM
+// Look how to create elements using the DOM
+// Create an input field to save initials for highscore
+// Add the initials for high score into the local storage
+// For high scores, learn how to output local storage
