@@ -232,7 +232,6 @@ function setLastScore() {
     localStorage.setItem("lastScoreCount", lastScoreArray);
 }
 
-
 // Sets the Highest Score Achieved by Player
 function setHighScore() {
     highScore.textContent = highScoreCounter;
