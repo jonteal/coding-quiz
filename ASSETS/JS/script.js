@@ -277,6 +277,10 @@ function resetScores() {
 // Attaches Click Event Listener to Reset Scores
 resetScoreButton.addEventListener("click", resetScores);
 
+
+
+
+
 // var userInitials = prompt("Please enter your initials");
 
 // if (winGame) {
