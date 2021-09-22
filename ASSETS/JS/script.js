@@ -5,6 +5,7 @@ var questionContainerElem = document.getElementById('question-container');
 var questionElem = document.getElementById('question');
 var answerButtonsElem = document.getElementById('answer-buttons');
 var initialsForm = document.getElementById('initials-form');
+var submitButton = document.getElementById('submit-button');
 
 // Score-Related Variables
 var lastScore = document.getElementById('last-score');
@@ -279,21 +280,9 @@ resetScoreButton.addEventListener("click", resetScores);
 
 
 
-
-
-// var userInitials = prompt("Please enter your initials");
-
-// if (winGame) {
-//     var initials = document.createElement(userInitials);
-//     initials.textContent = userInitials;
-//     document.body.appendChild(initials);
-// }
-
-
 // I would like it...
 // Stop the clock and display it as the Player's score at the end of the game
 // Have an input for the player's initials and save their score 
-// I want a reset score function/button
 
 // Look into how to manipulate DOM
 // Look how to create elements using the DOM

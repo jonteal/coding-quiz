@@ -150,6 +150,7 @@ button {
 
 .high-score,
 .go-back-btn,
-.clear-high-scores {
+.clear-high-scores,
+#submit-button {
     display: none;
 }
