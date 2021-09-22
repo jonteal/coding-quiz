@@ -4,6 +4,7 @@ var nextBtn = document.getElementById('next-btn');
 var questionContainerElem = document.getElementById('question-container');
 var questionElem = document.getElementById('question');
 var answerButtonsElem = document.getElementById('answer-buttons');
+var initialsForm = document.getElementById('initials-form');
 
 // Score-Related Variables
 var lastScore = document.getElementById('last-score');
@@ -48,6 +49,7 @@ function startGame() {
     questionContainerElem.classList.remove('hide');
     setNextQuestion();
     startTimer()
+    initialsForm.classList.add('hide');
 }
 
 
@@ -99,7 +101,6 @@ function selectAnswer(e) {
     // Tests if the answer is incorret and subtracts 10 seconds if so
     if (!correct) {
         timerCount -= 10; 
-        // console.log("test");
     }
     
     // Shows Next Button if There is At Least 1 Question Remaining
@@ -191,7 +192,6 @@ function startTimer() {
                 // Clears interval and stops timer
                 clearInterval(timer);
                 winGame();
-                // console.log("test for game over")
             }
         }
         // Tests if time has run out
@@ -199,7 +199,6 @@ function startTimer() {
             // Clears interval
             clearInterval(timer);
             timeOut();
-            console.log("test")
         }
     }, 1000);
 }
@@ -210,9 +209,7 @@ function winGame() {
     startBtn.classList.remove('hide');
     setLastScore();
     finishTime = timerCount;
-    // Need function to add remaining time as score
-    // Need function to enter in initials of player
-
+    initialsForm.classList.remove('hide');
 }
 
 var finishTime;
@@ -228,7 +225,7 @@ var lastScoreArray = [];
 var highScoreArray = [];
 
 
-    // Sets the Last Score Achieved by Player
+// Sets the Last Score Achieved by Player
 function setLastScore() {
     lastScore.textContent = lastScoreCounter;
     lastScoreArray.push(lastScoreCounter);
@@ -280,13 +277,18 @@ function resetScores() {
 // Attaches Click Event Listener to Reset Scores
 resetScoreButton.addEventListener("click", resetScores);
 
+// var userInitials = prompt("Please enter your initials");
+
+// if (winGame) {
+//     var initials = document.createElement(userInitials);
+//     initials.textContent = userInitials;
+//     document.body.appendChild(initials);
+// }
+
 
 // I would like it...
-// Get rid of restart button and just replace with Start button. When the last question ends the clock stops.
-// Display a message to the User at the end of the game
 // Stop the clock and display it as the Player's score at the end of the game
 // Have an input for the player's initials and save their score 
-// I want to create a losing message/scenario for if the Player doesn't finish in time
 // I want a reset score function/button
 
 // Look into how to manipulate DOM

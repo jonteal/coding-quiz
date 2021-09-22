@@ -31,6 +31,7 @@ body.wrong {
     --hue: var(--hue-wrong);
 }
 
+.initials-form,
 .container {
     width: 800px;
     max-width: 80%;
@@ -38,6 +39,16 @@ body.wrong {
     border-radius: 5px;
     padding: 10px;
     box-shadow: 0 0 10px 2px;
+}
+
+.initials-div {
+    display: flex;
+    justify-content: center;
+    border-radius: 10px;
+}
+
+.ititials {
+    font-family: fantasy;
 }
 
 button {
