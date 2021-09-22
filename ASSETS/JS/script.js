@@ -225,6 +225,7 @@ var lastScoreArray = [];
 var highScoreArray = [];
 
 
+
 // Sets the Last Score Achieved by Player
 function setLastScore() {
     lastScore.textContent = lastScoreCounter;

@@ -148,3 +148,8 @@ button {
     font-family: fantasy;
 }
 
+.high-score,
+.go-back-btn,
+.clear-high-scores {
+    display: none;
+}
