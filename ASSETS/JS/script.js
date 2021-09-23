@@ -5,10 +5,9 @@ var questionContainerElem = document.getElementById('question-container');
 var questionElem = document.getElementById('question');
 var answerButtonsElem = document.getElementById('answer-buttons');
 var initialsForm = document.getElementById('initials-form');
-var submitButton = document.getElementById('submit-button');
 
 // Score-Related Variables
-var lastScore = document.getElementById('last-score');
+var lastScore = document.getElementById('final-score');
 var highScore = document.getElementById('high-score');
 var gameOver = false;
 var lastScoreCounter = 0;
@@ -16,7 +15,7 @@ var highScoreCounter = 0;
 
 // Timer-related Variables
 var timer;
-var timerCount;
+var timerCount = 60;
 var timerElement = document.querySelector('.timer-count');
 
 // Calls init() so that it executes when page is opened
@@ -43,7 +42,7 @@ nextBtn.addEventListener("click", () => {
 // Function to Hide Start Button, Display and Shuffle Questions Randomly
 function startGame() {
     gameOver = false;
-    timerCount = 60;
+    // timerCount = 60;
     startBtn.classList.add('hide');
     shuffledQuestions = questions.sort(() => Math.random() - .5);
     currentQuestionIndex = 0;
@@ -211,6 +210,9 @@ function winGame() {
     setLastScore();
     finishTime = timerCount;
     initialsForm.classList.remove('hide');
+    document.getElementById('last-score');
+    printScores();
+    lastScore.textContent = finishTime;
 }
 
 var finishTime;
@@ -225,6 +227,13 @@ function timeOut() {
 var lastScoreArray = [];
 var highScoreArray = [];
 
+function printScores() {
+    var highscores = JSON.parse(window.localStorage.getItem("highscores")) || highScoreArray;
+    for (let i = 0; i < highscores.length; i++) {
+        var scoreList = document.getElementById('highscores');
+        scoreList.push(highscores);
+      }
+}
 
 
 // Sets the Last Score Achieved by Player

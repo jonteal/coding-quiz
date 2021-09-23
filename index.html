@@ -38,13 +38,13 @@
             <input type="text" class="initials" placeholder="Enter Your Initials"/>
         </div>
     </form>
-    <button id="submit-button">Submit</button>
+    <!-- <button id="submit-button">Submit</button> -->
 
     <section>
         <div class="card-results">
             <div class="win-loss-container">
-                <h2 class="medium-font">Your Score: <span id="last-score" class="last-score">0</span></h2>
-                <h2 class="medium-font">High Score: <span id="high-score" class="high-score">0</span></h2>
+                <h2 class="medium-font">Your Score: <span id="final-score" class="last-score"></span></h2>
+                <h2 class="medium-font">High Score: <span id="high-score" class="high-score"></span></h2>
             </div>
             <div class="reset-score-button-div">
                 <button class="reset-score-button">Reset Score</button>
@@ -53,7 +53,8 @@
         </div>
         <div class="card timer">
             <div class="timer-text">
-                <div class="medium-font timer-count">60</div>
+                <div class="medium-font timer-count" id="final-score">60</div>
+                <!-- <p class="medium-font">Final Score<span id="last-score"></span></p> -->
                 <h3 class="medium-font">seconds remaining</h3>
             </div>
         </div>
