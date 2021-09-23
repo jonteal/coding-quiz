@@ -42,7 +42,7 @@ nextBtn.addEventListener("click", () => {
 // Function to Hide Start Button, Display and Shuffle Questions Randomly
 function startGame() {
     gameOver = false;
-    // timerCount = 60;
+    timerCount = 60;
     startBtn.classList.add('hide');
     shuffledQuestions = questions.sort(() => Math.random() - .5);
     currentQuestionIndex = 0;
@@ -195,7 +195,7 @@ function startTimer() {
             }
         }
         // Tests if time has run out
-        if (timerCount === 0) {
+        if (timerCount <= 0) {
             // Clears interval
             clearInterval(timer);
             timeOut();
@@ -211,7 +211,7 @@ function winGame() {
     finishTime = timerCount;
     initialsForm.classList.remove('hide');
     document.getElementById('last-score');
-    printScores();
+    // printScores();
     lastScore.textContent = finishTime;
 }
 
@@ -227,13 +227,6 @@ function timeOut() {
 var lastScoreArray = [];
 var highScoreArray = [];
 
-function printScores() {
-    var highscores = JSON.parse(window.localStorage.getItem("highscores")) || highScoreArray;
-    for (let i = 0; i < highscores.length; i++) {
-        var scoreList = document.getElementById('highscores');
-        scoreList.push(highscores);
-      }
-}
 
 
 // Sets the Last Score Achieved by Player
