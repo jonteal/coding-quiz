@@ -1,78 +1,51 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="ASSETS/CSS/style.css">
-    <title>Game of Thrones Quiz</title>
-</head>
-<body>    
-    
-    <header>
-        <div>
-            <h1 class="large-font">Game of Thrones Quiz</h1>
-        </div>
-    </header>
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+        <title>Coding Quiz</title>
 
+        <link rel="stylesheet" href="./assets/css/styles.css" />
+    </head>
 
-    <div class="container">
-        <div id="question-container" class="hide">
-            <div id="question">Question</div>
-            <div id="answer-buttons" class="btn-grid">
-                <button class="btn">Answer 1</button>
-                <button class="btn">Answer 2</button>
-                <button class="btn">Answer 3</button>
-                <button class="btn">Answer 4</button>
-            </div>
-        </div>
-        <div class="controls">
-            <button id="start-btn" class="start-btn btn">Start</button>
-            <button id="next-btn" class="start-btn btn hide">Next</button>
-        </div>
-    </div>
+    <body>
+        <div class="scores"><a href="highscores.html">View Highscores</a></div>
 
-    <form action="ASSETS/JS/script.js"  class="initials-form hide" id="initials-form">
-        <label for="initials">Enter Initials:</label>
-        <div class="initials-div">
-            <input type="text" class="initials" placeholder="Enter Your Initials"/>
-        </div>
-    </form>
-    <!-- <button id="submit-button">Submit</button> -->
+        <div class="timer">Time: <span id="time">0</span></div>
 
-    <section>
-        <div class="card-results">
-            <div class="win-loss-container">
-                <h2 class="medium-font">Your Score: <span id="final-score" class="last-score"></span></h2>
-                <h2 class="medium-font">High Score: <span id="high-score" class="high-score"></span></h2>
-            </div>
-            <div class="reset-score-button-div">
-                <button class="reset-score-button">Reset Score</button>
-                <button class="high-score-button"><a href="highscores.html">High Scores</a></button>
-            </div>
+        <div class="wrapper">
+        <div id="start-screen" class="start">
+            <h1>Coding Quiz Challenge</h1>
+            <p>
+            Try to answer the following code-related questions within the time
+            limit. Keep in mind that incorrect answers will penalize your
+            score/time by ten seconds!
+            </p>
+            <button id="start">Start Quiz</button>
         </div>
-        <div class="card timer">
-            <div class="timer-text">
-                <div class="medium-font timer-count" id="final-score">60</div>
-                <!-- <p class="medium-font">Final Score<span id="last-score"></span></p> -->
-                <h3 class="medium-font">seconds remaining</h3>
-            </div>
-        </div>
-    </section>  
-    <!-- <section class="high-scores">
-        <h2>
-            <ul>
-                <button class="go-back-btn">Go Back</button>
-                <button class="clear-high-scores">Clear High Scores</button>
-            </ul>
-            <div id="high-score-div"></div>
-        </h2>
-    </section>
-    <section class="display-results"></section> -->
 
-    <script src="ASSETS/JS/script.js"></script>
-</body>
+        <div id="questions" class="hide">
+            <h2 id="question-title"></h2>
+            <div id="choices" class="choices"></div>
+        </div>
+
+        <div id="end-screen" class="hide">
+            <h2>All done!</h2>
+            <p>Your final score is <span id="final-score"></span>.</p>
+            <p>
+            Enter initials: <input type="text" id="initials" max="3" />
+            <button id="submit">Submit</button>
+            </p>
+        </div>
+
+        <div id="feedback" class="feedback hide"></div>
+        </div>
+
+        <script src="ASSETS/JS/questions.js"></script>
+        <script src="ASSETS/JS/script.js"></script>
+        <script src="ASSETS/JS/scores.js"></script>
+    </body>
 </html>
-
 
 

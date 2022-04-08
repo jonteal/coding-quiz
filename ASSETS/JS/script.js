@@ -1,293 +1,169 @@
-// Assigned Variables 
-var startBtn = document.getElementById('start-btn');
-var nextBtn = document.getElementById('next-btn');
-var questionContainerElem = document.getElementById('question-container');
-var questionElem = document.getElementById('question');
-var answerButtonsElem = document.getElementById('answer-buttons');
-var initialsForm = document.getElementById('initials-form');
+var currentQuestionIndex = 0;
+var time = questions.length * 15;
+var timerId;
 
-// Score-Related Variables
-var lastScore = document.getElementById('final-score');
-var highScore = document.getElementById('high-score');
-var gameOver = false;
-var lastScoreCounter = 0;
-var highScoreCounter = 0;
+// variables to reference DOM elements
+var questionsEl = document.getElementById("questions");
+var timerEl = document.getElementById("time");
+var choicesEl = document.getElementById("choices");
+var submitBtn = document.getElementById("submit");
+var startBtn = document.getElementById("start");
+var initialsEl = document.getElementById("initials");
+var feedbackEl = document.getElementById("feedback");
 
-// Timer-related Variables
-var timer;
-var timerCount = 60;
-var timerElement = document.querySelector('.timer-count');
+// sound effects
+var sfxRight = new Audio("assets/sfx/correct.wav");
+var sfxWrong = new Audio("assets/sfx/incorrect.wav");
 
-// Calls init() so that it executes when page is opened
-init();
+function startQuiz() {
+  // hide start screen
+    var startScreenEl = document.getElementById("start-screen");
+    startScreenEl.setAttribute("class", "hide");
 
-// The init function is called when the page loads
-function init() {
-    getLastScore();
-    getHighScore();
+  // un-hide questions section
+    questionsEl.removeAttribute("class");
+
+  // start timer
+    timerId = setInterval(clockTick, 1000);
+
+  // show starting time
+    timerEl.textContent = time;
+
+    getQuestion();
 }
 
-// Variables That Can be Changed to Shuffled
-let shuffledQuestions, currentQuestionIndex;
+function getQuestion() {
+  // get current question object from array
+    var currentQuestion = questions[currentQuestionIndex];
 
-// Start Button Event to Begin Game
-startBtn.addEventListener("click", startGame);
+    // update title with current question
+    var titleEl = document.getElementById("question-title");
+    titleEl.textContent = currentQuestion.title;
 
-// Next Button Event to Go to Next Question
-nextBtn.addEventListener("click", () => {
-    currentQuestionIndex++;
-    setNextQuestion();
-})
+    // clear out any old question choices
+    choicesEl.innerHTML = "";
 
-// Function to Hide Start Button, Display and Shuffle Questions Randomly
-function startGame() {
-    gameOver = false;
-    timerCount = 60;
-    startBtn.classList.add('hide');
-    shuffledQuestions = questions.sort(() => Math.random() - .5);
-    currentQuestionIndex = 0;
-    questionContainerElem.classList.remove('hide');
-    setNextQuestion();
-    startTimer()
-    initialsForm.classList.add('hide');
+    // loop over choices
+    currentQuestion.choices.forEach(function(choice, i) {
+        // create new button for each choice
+        var choiceNode = document.createElement("button");
+        choiceNode.setAttribute("class", "choice");
+        choiceNode.setAttribute("value", choice);
+
+        choiceNode.textContent = i + 1 + ". " + choice;
+
+        // attach click event listener to each choice
+        choiceNode.onclick = questionClick;
+
+        // display on the page
+        choicesEl.appendChild(choiceNode);
+    });
 }
 
+function questionClick() {
+  // check if user guessed wrong
+    if (this.value !== questions[currentQuestionIndex].answer) {
+        // penalize time
+        time -= 15;
 
-// Function to Set the Next Question
-function setNextQuestion() {
-    resetState();
-    showQuestion(shuffledQuestions[currentQuestionIndex]);
-}
-
-// Function to Display Question and Answer Buttons
-function showQuestion(question) {
-    // Accesses the 
-    questionElem.innerText = question.question;
-    question.answers.forEach(answer => {
-        var button = document.createElement('button');
-        button.innerText = answer.text;
-        button.classList.add('btn');
-        if (answer.correct) {
-            button.dataset.correct = answer.correct;
+        if (time < 0) {
+        time = 0;
         }
-        button.addEventListener("click", selectAnswer);
-        answerButtonsElem.appendChild(button);
-    })
-}
 
-// Function to Reset State During Every Question
-function resetState() {
-    clearStatusClass(document.body);
-    
-    // Hides Next Button
-    nextBtn.classList.add('hide');
-    while (answerButtonsElem.firstChild) {
-        answerButtonsElem.removeChild(answerButtonsElem.firstChild);
-    }
-}
+        // display new time on page
+        timerEl.textContent = time;
 
-// Function to Validate Selected Answers from User
-function selectAnswer(e) {
-    var selectedButton = e.target;
+        // play "wrong" sound effect
+        sfxWrong.play();
 
-    // Setting Variable for Correct Answer in Dataset
-    var correct = selectedButton.dataset.correct;
-    // console.log(correct);
-    setStatusClass(document.body, correct);
-    Array.from(answerButtonsElem.children).forEach(button => {
-        setStatusClass(button, button.dataset.correct);
-    })
-
-    // Tests if the answer is incorret and subtracts 10 seconds if so
-    if (!correct) {
-        timerCount -= 10; 
-    }
-    
-    // Shows Next Button if There is At Least 1 Question Remaining
-    if (shuffledQuestions.length > currentQuestionIndex + 1) {
-        nextBtn.classList.remove('hide');
-    } 
-    // Else Shows the Restart Button
-    else {
-        startBtn.innerText = 'Restart';
-        startBtn.classList.remove('hide');
-        gameOver = true;
-    }
-}
-
-// Establishes Correct/Wrong Answers Based on User's Pick
-function setStatusClass(element, correct) {
-    clearStatusClass(element);
-    if (correct) {
-        element.classList.add('correct');
+        feedbackEl.textContent = "Wrong!";
     } else {
-        element.classList.add('wrong');
+        // play "right" sound effect
+        sfxRight.play();
+
+        feedbackEl.textContent = "Correct!";
     }
-}
 
-// Resets the Status of Correct/Wrong Answer After Each User Pick
-function clearStatusClass(element) {
-    element.classList.remove('correct');
-    element.classList.remove('wrong');
-}
-
-// Quiz Questions Array
-const questions = [
-    {
-        question: 'Which animal is the symbol for House Stark?',
-        answers: [
-            {text: 'Dragon', correct: false },
-            {text: 'Direwolf', correct: true },
-            {text: 'Lion', correct: false },
-            {text: 'Stag', correct: false}
-        ]
-    },
-    {
-        question: 'How many dragons did Daenerys have?',
-        answers: [
-            {text: '1', correct: false },
-            {text: '2', correct: false },
-            {text: '3', correct: true },
-            {text: '10', correct: false },
-        ]
-    },
-    {
-        question: 'What was the name of the evil army that posed the biggest threat in the show?',
-        answers: [
-            {text: 'The Weeping Willows', correct: false },
-            {text: 'The Great Horde', correct: false },
-            {text: 'The Golden Army', correct: false },
-            {text: 'The White Walkers', correct: true },
-        ]
-    },
-    {
-        question: 'What was arguably the most popular phrase coined from this series?',
-        answers: [
-            {text: 'We all float down here.', correct: false },
-            {text: 'Winter is coming.', correct: true },
-            {text: 'You shall not pass!', correct: false },
-            {text: 'May the force be with you.', correct: false },
-        ]
-    },
-    {
-        question: 'Who famously said "I drink and I know things?',
-        answers: [
-            {text: 'Tyrion Lannister', correct: true },
-            {text: 'Theon Greyjoy', correct: false },
-            {text: 'Robert Baratheon', correct: false },
-            {text: 'Jaime Lannister', correct: false },
-        ]
-    }
-]
-
-// The setTimer function starts and stops the timer and triggers winGame() and timeOut()
-function startTimer() {
-    // Sets Timer
-    timer = setInterval(function() {
-        timerCount--;
-        timerElement.textContent = timerCount;
-        if (timerCount >= 0) {
-            // Tests if win condition is met
-            if (gameOver && timerCount > 0) {
-                // Clears interval and stops timer
-                clearInterval(timer);
-                winGame();
-            }
-        }
-        // Tests if time has run out
-        if (timerCount <= 0) {
-            // Clears interval
-            clearInterval(timer);
-            timeOut();
-        }
+    // flash right/wrong feedback on page for half a second
+    feedbackEl.setAttribute("class", "feedback");
+    setTimeout(function() {
+        feedbackEl.setAttribute("class", "feedback hide");
     }, 1000);
-}
 
-// The winGame Function is called when the win condition is met
-function winGame() {
-    startBtn.disabled = false;
-    startBtn.classList.remove('hide');
-    setLastScore();
-    finishTime = timerCount;
-    initialsForm.classList.remove('hide');
-    document.getElementById('last-score');
-    // printScores();
-    lastScore.textContent = finishTime;
-}
+    // move to next question
+    currentQuestionIndex++;
 
-var finishTime;
-
-// The timeOut function is called when the timer reached 0
-function timeOut() {
-    startBtn.disabled = false;
-    setLastScore();
-    // Need function to add remaining time as score
-}
-
-var lastScoreArray = [];
-var highScoreArray = [];
-
-
-
-// Sets the Last Score Achieved by Player
-function setLastScore() {
-    lastScore.textContent = lastScoreCounter;
-    lastScoreArray.push(lastScoreCounter);
-    localStorage.setItem("lastScoreCount", lastScoreArray);
-}
-
-// Sets the Highest Score Achieved by Player
-function setHighScore() {
-    highScore.textContent = highScoreCounter;
-    highScoreArray.push(highScoreCounter)
-    localStorage.setItem("highScoreCount", highScoreArray);
-}
-
-// Gets Last Score Player Achieved to Display
-function getLastScore() {
-    var storedLastScore = localStorage.getItem("lastScoreCount");
-    if (storedLastScore === null) {
-        lastScoreCounter = 0;
+    // check if we've run out of questions
+    if (currentQuestionIndex === questions.length) {
+        quizEnd();
     } else {
-        lastScoreCounter = storedLastScore;
+        getQuestion();
     }
-    lastScore.textContent = lastScoreCounter;
 }
 
-// Gets Highest Score Player Achieved to Display
-function getHighScore() {
-    var storedHighScore = localStorage.getItem("highScoreCount");
-    if (storedHighScore === null) {
-        highScoreCounter = 0;
-    } else {
-        highScoreCounter = storedHighScore;
+function quizEnd() {
+  // stop timer
+    clearInterval(timerId);
+
+    // show end screen
+    var endScreenEl = document.getElementById("end-screen");
+    endScreenEl.removeAttribute("class");
+
+    // show final score
+    var finalScoreEl = document.getElementById("final-score");
+    finalScoreEl.textContent = time;
+
+    // hide questions section
+    questionsEl.setAttribute("class", "hide");
+}
+
+function clockTick() {
+  // update time
+    time--;
+    timerEl.textContent = time;
+
+    // check if user ran out of time
+    if (time <= 0) {
+        quizEnd();
     }
-    highScore.textContent = highScoreCounter;
 }
 
-// Button to Reset Scores
-var resetScoreButton = document.querySelector(".reset-score-button");
+function saveHighscore() {
+  // get value of input box
+    var initials = initialsEl.value.trim();
 
-function resetScores() {
-    // Resets the last score and high score
-    lastScoreCounter = 0;
-    highScoreCounter = 0;
-    // Renders last score and high score counts and sets them into client storage
-    setLastScore()
-    setHighScore()
+    // make sure value wasn't empty
+    if (initials !== "") {
+        // get saved scores from localstorage, or if not any, set to empty array
+        var highscores =
+        JSON.parse(window.localStorage.getItem("highscores")) || [];
+
+        // format new score object for current user
+        var newScore = {
+        score: time,
+        initials: initials
+    };
+
+    // save to localstorage
+    highscores.push(newScore);
+    window.localStorage.setItem("highscores", JSON.stringify(highscores));
+
+    // redirect to next page
+    window.location.href = "highscores.html";
+    }
 }
 
-// Attaches Click Event Listener to Reset Scores
-resetScoreButton.addEventListener("click", resetScores);
+function checkForEnter(event) {
+  // "13" represents the enter key
+    if (event.key === "Enter") {
+    saveHighscore();
+    }
+}
 
+// user clicks button to submit initials
+submitBtn.onclick = saveHighscore;
 
+// user clicks button to start quiz
+startBtn.onclick = startQuiz;
 
-// I would like it...
-// Stop the clock and display it as the Player's score at the end of the game
-// Have an input for the player's initials and save their score 
-
-// Look into how to manipulate DOM
-// Look how to create elements using the DOM
-// Create an input field to save initials for highscore
-// Add the initials for high score into the local storage
-// For high scores, learn how to output local storage
+initialsEl.onkeyup = checkForEnter;
